@@ -1,38 +1,39 @@
-# Exp No: 18
+# Exp No: 21
 # DFS Traversal
 
-## AIM:
+## AIM :
 
-To write a Python function BFS to perform Breadth-First Search (BFS) traversal from a given source vertex in a graph.
+To write a Python program to perform Depth First Search (DFS) traversal from a given source vertex using a helper function DFSUtil.
 
-ALGORITHM:
+## ALGORITHM:
 
-Step 1 : Represent the graph using an adjacency list.
+Step 1 : Define a graph using an adjacency list (dictionary format).
 
-Step 2 : Define a function BFS(start, graph) that:
+Step 2 : Create a helper function DFSUtil(v, visited, graph):
 
-a) Initializes a queue and a visited list.
+a) Mark the current node as visited.
 
-b) Marks the starting vertex as visited and enqueues it.
+b) Print the current node.
 
-c) While the queue is not empty:
+c) Recursively call DFSUtil for all adjacent nodes that are not yet visited.
 
-1.Dequeue a vertex, print it.
+Step 3: In the main function:
 
-2.Enqueue all its adjacent unvisited vertices and mark them as visited.
+a) Initialize a visited list to keep track of visited vertices.
 
-Step 3 : Take user input for the source vertex and call the BFS function.
+b) Get the starting vertex as input from the user.
 
-# PROGRAM:
+c) Call DFSUtil with the source vertex and graph.
+
+Step 4 : Display the order of visited vertices during the DFS traversal.
+
+## PROGRAM:
 
 ```
-# Python3 Program to print BFS traversal
-# from a given source vertex. BFS(int s)
-# traverses vertices reachable from s.
 from collections import defaultdict
 
-# This class represents a directed graph
-# using adjacency list representation
+
+
 class Graph:
 
 	# Constructor
@@ -42,32 +43,33 @@ class Graph:
 		self.graph = defaultdict(list)
 
 	# function to add an edge to graph
-	def addEdge(self,u,v):
+	def addEdge(self, u, v):
 		self.graph[u].append(v)
 
-	# Function to print a BFS of graph
-	def BFS(self, s):
+	# A function used by DFS
+	def DFSUtil(self, v, visited):
 
-		# Mark all the vertices as not visited
-		visited = [False] * (max(self.graph) + 1)
+		# Mark the current node as visited
+		# and print it
+		visited.add(v)
+		print(v,end=' ')
+		for neighbour in self.graph[v]:
+		    if neighbour not in visited:
+		        self.DFSUtil(neighbour, visited)
+		
+		
+	# The function to do DFS traversal. It uses
+	# recursive DFSUtil()
+	def DFS(self, v):
 
-		# Create a queue for BFS
-		queue = []
+		# Create a set to store visited vertices
+		visited = set()
 
-		# Mark the source node as
-		# visited and enqueue it
-		queue.append(s)
-		visited[s] = True
-		while queue:
-		    s=queue.pop(0)
-		    print(s,end=" ")
-		    for i in self.graph[s]:
-		        if visited[i]==False:
-		            queue.append(i)
-		            visited[i]=True
+		# Call the recursive helper function
+		# to print DFS traversal
+		self.DFSUtil(v, visited)
 
-# Create a graph given in
-# the above diagram
+
 n=int(input())
 g = Graph()
 g.addEdge(0, 1)
@@ -77,16 +79,14 @@ g.addEdge(2, 0)
 g.addEdge(2, 3)
 g.addEdge(3, 3)
 
-print ("Following is Breadth First Traversal"
-				" (starting from vertex {})".format(n))
-g.BFS(n)
-
+print("Following is DFS from (starting from vertex {})".format(n))
+g.DFS(n)
 ```
 
-## OUTPUT :
+## OUTPUT:
 
-![image](https://github.com/user-attachments/assets/15976927-a72b-4007-bb50-ea4f2be6ad1d)
+![image](https://github.com/user-attachments/assets/38d24331-54f9-4ba6-a746-c70eb3eaa6d3)
 
 ## RESULT :
 
-Thus the execution of BFS to perform Breadth-First Search (BFS) traversal from a given source vertex in a graph was successfully verified.
+Thus the program to perform Depth First Search (DFS) traversal from a given source vertex using a helper function DFSUtil was successfully verified.
