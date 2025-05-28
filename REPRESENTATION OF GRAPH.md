@@ -1,92 +1,92 @@
-# Exp No: 21
+# Exp No: 19
 # Representation of Graph
 
 ## AIM :
 
-To write a Python program to perform Depth First Search (DFS) traversal from a given source vertex using a helper function DFSUtil.
+To demonstrate the adjacency list representation of an undirected graph using linked lists in Python.
 
-## ALGORITHM:
+## ALGORITHM :
 
-Step 1 : Define a graph using an adjacency list (dictionary format).
+Step 1 : Define AdjNode class to create nodes representing vertices connected to a vertex.
 
-Step 2 : Create a helper function DFSUtil(v, visited, graph):
+Step 2 : Define Graph class to initialize a graph with V vertices and an adjacency list for each.
 
-a) Mark the current node as visited.
+Step 3 : Use add_edge() to add edges:
 
-b) Print the current node.
+a) Insert destination node at the beginning of source’s list.
 
-c) Recursively call DFSUtil for all adjacent nodes that are not yet visited.
+b) Insert source node in destination’s list (because it’s undirected).
 
-Step 3: In the main function:
+Step 4 : In print_graph(), for each vertex:
 
-a) Initialize a visited list to keep track of visited vertices.
+a) Print its index followed by all connected vertices using a while loop.
 
-b) Get the starting vertex as input from the user.
+Step 5 : Traverse each adjacency list using temp = self.graph[i] and follow .next links.
 
-c) Call DFSUtil with the source vertex and graph.
+Step 6 : Format the output to match the required display format.
 
-Step 4 : Display the order of visited vertices during the DFS traversal.
+Step 7 : Call print_graph() from the main driver code to show the full graph structure.
 
-## PROGRAM:
+## PROGRAM :
 
 ```
-from collections import defaultdict
+class AdjNode:
+	def __init__(self, data):
+		self.vertex = data
+		self.next = None
 
 
-
+# A class to represent a graph. A graph
+# is the list of the adjacency lists.
+# Size of the array will be the no. of the
+# vertices "V"
 class Graph:
+	def __init__(self, vertices):
+		self.V = vertices
+		self.graph = [None] * self.V
 
-	# Constructor
-	def __init__(self):
+	# Function to add an edge in an undirected graph
+	def add_edge(self, src, dest):
+		# Adding the node to the source node
+		node = AdjNode(dest)
+		node.next = self.graph[src]
+		self.graph[src] = node
 
-		# default dictionary to store graph
-		self.graph = defaultdict(list)
+		# Adding the source node to the destination as
+		# it is the undirected graph
+		node = AdjNode(src)
+		node.next = self.graph[dest]
+		self.graph[dest] = node
 
-	# function to add an edge to graph
-	def addEdge(self, u, v):
-		self.graph[u].append(v)
+	
+	def print_graph(self):
+	    for i in range(self.V):
+	        print("Adjacency list of vertex {}\n head".format(i),end="")
+	        temp=self.graph[i]
+	        while temp:
+	            print(" -> {}".format(temp.vertex),end="")
+	            temp=temp.next
+	        print(" \n")
+# Driver program to the above graph class
+if __name__ == "__main__":
+	V = 5
+	graph = Graph(V)
+	graph.add_edge(0, 1)
+	graph.add_edge(0, 4)
+	graph.add_edge(1, 2)
+	graph.add_edge(1, 3)
+	graph.add_edge(1, 4)
+	graph.add_edge(2, 3)
+	graph.add_edge(3, 4)
 
-	# A function used by DFS
-	def DFSUtil(self, v, visited):
+	graph.print_graph()
 
-		# Mark the current node as visited
-		# and print it
-		visited.add(v)
-		print(v,end=' ')
-		for neighbour in self.graph[v]:
-		    if neighbour not in visited:
-		        self.DFSUtil(neighbour, visited)
-		
-		
-	# The function to do DFS traversal. It uses
-	# recursive DFSUtil()
-	def DFS(self, v):
-
-		# Create a set to store visited vertices
-		visited = set()
-
-		# Call the recursive helper function
-		# to print DFS traversal
-		self.DFSUtil(v, visited)
-
-
-n=int(input())
-g = Graph()
-g.addEdge(0, 1)
-g.addEdge(0, 2)
-g.addEdge(1, 2)
-g.addEdge(2, 0)
-g.addEdge(2, 3)
-g.addEdge(3, 3)
-
-print("Following is DFS from (starting from vertex {})".format(n))
-g.DFS(n)
 ```
 
-## OUTPUT:
+## OUTPUT :
 
-![image](https://github.com/user-attachments/assets/38d24331-54f9-4ba6-a746-c70eb3eaa6d3)
+![image](https://github.com/user-attachments/assets/15e35e84-b75a-4bda-8ab9-e30a1c35ff40)
 
 ## RESULT :
 
-Thus the program to perform Depth First Search (DFS) traversal from a given source vertex using a helper function DFSUtil was successfully verified.
+Thus demonstration of the adjacency list representation of an undirected graph using linked lists in Python is successfully verified.
